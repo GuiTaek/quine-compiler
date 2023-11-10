@@ -1,0 +1,1 @@
+exec(s:='print(end="exec(s:=%r)"%s)')
