@@ -19,10 +19,10 @@ def main():
                         " aborting on existing file.", action="store_true")
     parser.add_argument("-r", "--run", dest="run", help="not only compile, but also run the code", action="store_true")
     args = parser.parse_args()
-    compile(args.placeholder, args.outputfile, args.force, args.run)
+    compile(args.placeholder, args.inputfile, args.outputfile, args.force, args.run)
 def unescape(string):
     return string.encode('unicode_escape').decode().replace('"', r"\"")
-def compile(placeholder, outputfile, force, run):
+def compile(placeholder, inputfile, outputfile, force, run):
     if os.path.exists(outputfile) and not force:
         raise RuntimeError(f"File \"{outputfile}\" already exists. Use -f if you want to overwrite")
     with open(inputfile) as f:
