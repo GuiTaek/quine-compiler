@@ -12,7 +12,7 @@ def unescape(string):
 
 def quine_compile(placeholder, content):
     lines = content.split("\n")
-    regex = re.compile(f'^([\w_]+) *= *("{placeholder}")')
+    regex = re.compile(f'^([\w_]+)(:str)? *= *("{placeholder}")')
     if not (regex_res := regex.match(lines[0])):
         raise RuntimeError("Input parameter 'content' has wrong format.")
     var_name = regex_res.group(1)
