@@ -27,7 +27,6 @@ def main():
 def load_function(module_name, filename, content):
     if os.path.exists(filename):
         raise RuntimeError(f"temp filename named {filename} already exists")
-    print(filename)
     with open(filename, mode="w") as f:
         f.write(content)
     # from ChatGPT
