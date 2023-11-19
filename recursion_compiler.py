@@ -5,11 +5,11 @@ import re
 from quine_compiler import quine_compile
 from default_compiler import run
 
-DESCRIPTION = """Calculates a script <code> out of a script <function>, that satisfies some equation given by the Kleene's second recursion theorem. <function> is assumed to have a function definition with \"def ...\" and also a comment \"#FUNC(<function_name>)\" where <function_name> is equal to one function definition. The comment can be any given any amount you wish, but only the last will be considered. The equation, the function <function_name> in <code> and <function_name> satisfies, is:\n
+DESCRIPTION = """Calculates a script <code> out of a script <function>, that satisfies some equation given by the Kleene's second recursion theorem. <function> is assumed to have a function definition with \"def ...\" and also a comment \"#FUNC(<function_name>)\" where <function_name> is equal to one function definition. The comment can be any given any amount you wish, but only the last will be considered. The equation, the function <function_name> in <code> and <function_name> satisfies, is:
 
-<code>.<function_name>(input_) == <function>.<function_name>(<code>, input_)\n
+<code>.<function_name>(input_) == <function>.<function_name>(<code>, input_)
 
-where <code>.<function_name> is <function_name> in <code> and <function>.<function_name> is <function_name> in <function>
+where <code>.<function_name> is <function_name> in <code> and <function>.<function_name> is <function_name> in <function>.
 """
 
 def extract_func_name(content):
@@ -36,7 +36,8 @@ def recursion_compile(placeholder, content):
     if regex_res.group(6):
         input_param += regex_res.group(6)
     after = regex_res.group(7)
-    quine_code = quine_compile(placeholder, f'{code_var}="{placeholder}"\n{before}def {func_name}({input_param}):{after}')
+    intermediate_code = f'{code_var}="{placeholder}"\n{before}def {func_name}({input_param}):{after}'
+    quine_code = quine_compile(placeholder, intermediate_code)
     return quine_code
 
 
