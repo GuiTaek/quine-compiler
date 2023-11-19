@@ -4,6 +4,9 @@ import argparse
 from runpy import run_path
 
 from default_compiler import run
+
+DESCRIPTION = "Compiles a Python code to include its code into its source code. The compiler expects the first line to match the regex f'^([\w_]+) *= *(<placeholder>)' e.g. \nmy_code = \"placeholder\"\n where <placeholder> has the value inside the argument --placeholder"
+
 def unescape(string):
     return string.encode('unicode_escape').decode().replace('"', r"\"")
 
@@ -19,4 +22,4 @@ def quine_compile(placeholder, content):
     return f"{first_line}\n{second_line}\n{rest}"    
 
 if __name__ == "__main__":
-    run(quine_compile, "quine.py")
+    run(quine_compile, "quine.py", DESCRIPTION)

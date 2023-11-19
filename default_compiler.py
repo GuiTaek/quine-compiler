@@ -4,17 +4,13 @@ usage -- include following code into your module without any non-defining code (
 ```from default_compiler import run
 
 if __name__ == "__main__":
-    run(compile, "my_default_output_filename.py")```"""
+    run(compile, "my_default_output_filename.py", "this is my funny compiler")```"""
 import os
 import argparse
-def create_default_parser(default_output_filename):
+def create_default_parser(default_output_filename, description):
     parser = argparse.ArgumentParser(
         prog="quine_compiler.py",
-        description="Compiles a Python code to include"
-        " its code into its source code. The compiler"
-        " expects the first line to match the regex f'^([\w_]+) *= *(<placeholder>)'"
-        " e.g. \nmy_code = \"placeholder\"\n"
-        " where <placeholder> has the value inside the argument --placeholder")
+        description=description)
     parser.add_argument("-p", "--placeholder", dest="placeholder", help="the placeholder which defines"
                         " the string the variable in the input code is set to. Defaults to placeholder",
                         default="placeholder", required=False)
@@ -34,7 +30,7 @@ def default_compile_file(placeholder, inputfile, outputfile, force, run, compile
         f.write(result)
     if run:
         run_path(outputfile)
-def run(compile_func, default_output_filename):
-    parser = create_default_parser(default_output_filename)
+def run(compile_func, default_output_filename, description):
+    parser = create_default_parser(default_output_filename, description)
     args = parser.parse_args()
     default_compile_file(args.placeholder, args.inputfile, args.outputfile, args.force, args.run, compile_func)

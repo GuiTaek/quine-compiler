@@ -5,6 +5,13 @@ import re
 from quine_compiler import quine_compile
 from default_compiler import run
 
+DESCRIPTION = """Calculates a script <code> out of a script <function>, that satisfies some equation given by the Kleene's second recursion theorem. <function> is assumed to have a function definition with \"def ...\" and also a comment \"#FUNC(<function_name>)\" where <function_name> is equal to one function definition. The comment can be any given any amount you wish, but only the last will be considered. The equation, the function <function_name> in <code> and <function_name> satisfies, is:\n
+
+<code>.<function_name>(input_) == <function>.<function_name>(<code>, input_)\n
+
+where <code>.<function_name> is <function_name> in <code> and <function>.<function_name> is <function_name> in <function>
+"""
+
 def extract_func_name(content):
     regex_func_name = re.compile(r"#FUNC\(([a-zA-Z_0-9]+)\)")
     # it makes sense to use the last occuring #FUNC(), therefore the findall
@@ -34,4 +41,4 @@ def recursion_compile(placeholder, content):
 
 
 if __name__ == "__main__":
-    run(recursion_compile, "recursion.py")
+    run(recursion_compile, "recursion.py", DESCRIPTION)
